@@ -1,0 +1,47 @@
+GPIO Pins
+
+
+Serial and Parallel I/O
+    - How do we interface external signals
+        - Intel 8255 Programmable Peripheral Interpface
+        - Motorola 6820 Peripheral Interface Adapter
+    - The standard provides general-purpose I/O lines and control lines
+
+    --------
+    |mblaze|
+    --------
+        |
+        |
+    -------------- AXI Bus
+            |
+            |
+        ----------
+        |  GPIO  |   Developed to Interpface into the AXI Bus (^75 Signals (Wires)), Can be Slotted into the AXI Bus without having to worry about compatability
+        | Command|-----> Programmer Visible 
+        | Status |-----> ^^^^^^^^^^^^^^^^^^
+        ----------   
+
+- GPIO Provides all signals/connections to the AXI Bus
+- Can Have 1 or 2 Channels of 32 bits each
+- Each Bit can be configured input or output
+
+Page 5 for Table:
+https://hthreads.github.io/classes/embedded-systems/labs/lab2/assets/datasheets/axi-gpio.pdf
+
+
+- GPIO_TRI= sets up direction and use of Tri-State
+    - 0 : write(output) (turns on tristate connections)
+    - 1 : reat(input) (disables tristate connections)
+    - If tri state buffer is enabled it stops incoming signals 
+
+
+- GPIOx_DATA:= Port for Data  
+    - If config as output
+        - Writing to it will output the Data
+        - Bit cannot be read
+    - If a bit configured as Input 
+        - Reading will bring in value
+        - Writing to it won't do anything
+    - Reason for Volotile Int is to prevent compiler from optomizing repetative and redundant input output information 
+
+    
