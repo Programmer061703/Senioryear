@@ -43,5 +43,6 @@ https://hthreads.github.io/classes/embedded-systems/labs/lab2/assets/datasheets/
         - Reading will bring in value
         - Writing to it won't do anything
     - Reason for Volotile Int is to prevent compiler from optomizing repetative and redundant input output information 
+    
 
     
