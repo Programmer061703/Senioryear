@@ -4,11 +4,9 @@ from collections import deque
 dx = [0, 0, -1, 1]
 dy = [-1, 1, 0, 0]
 
-# Function to check if the cell is within the grid bounds and accessible
 def is_valid(x, y, m, n, matrix, visited):
     return 0 <= x < m and 0 <= y < n and matrix[x][y] == 1 and not visited[x][y]
 
-# Function to print the path
 def print_path(path):
     for i in range(len(path)):
         if i > 0:
@@ -42,8 +40,7 @@ def bfs(m, n, matrix):
                 visited[new_x][new_y] = True
                 queue.append((new_x, new_y, path + [(new_x, new_y)]))
 
-    # If we exit the loop without finding a path, print no path found
-    print("No path found")
+    print("-1")
 
 
 def dfs(m, n, matrix):
@@ -69,24 +66,25 @@ def dfs(m, n, matrix):
                 visited[new_x][new_y] = True
                 stack.append((new_x, new_y, path + [(new_x, new_y)]))
 
-    # If we exit the loop without finding a path, print no path found
-    print("No path found")
+    print("-1")
 
 
 
 # Example usage
 matrix = [
-    [1, 1, 1, 0, 0],
-    [1, 0, 1, 0, 0],
-    [1, 0, 1, 1, 1],
-    [0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 1]
+    [1, 1, 1, 0, 1],
+    [0, 0, 1, 1, 0],
+    [0, 1, 1, 1, 1],
+    [1, 1, 0, 1, 0],
+    [0, 1, 0, 1, 1]
 ]
 
 
 m = len(matrix)
 n = len(matrix[0])
+print("BFS:")
 bfs(m, n, matrix)
+print("\nDFS:")
 dfs(m, n, matrix)
 
 
