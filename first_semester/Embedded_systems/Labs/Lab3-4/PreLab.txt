@@ -1,0 +1,13 @@
+1. The major advantage of a timer vs the delay_ms() function is that instead previously the delay_ms() function would "Block" execution until the timer was complete.
+Now this is not a problem as the timer is a seperate entity from the CPU.
+2. According to documentation there are 3 main registers. These being the Control/Status Register(TCSR0), Load Register(TLR0), and Timer/Counter Register (TCR0)
+   - The Control/Status registers are responsible for the customization of how the timers and load registers operate. By specifying bits inside the Control/Status register
+	we are able to dictate functionality of the timers/counters and when values are loaded into them. 
+   - The Load register either Loads values into the timer register or Stores values from the timer register. 
+	- If TCR0 is set to Generate 
+		The Load register feeds in the inital value for the timer to use when counting, it is also used to reload the counter depending on the ARHT0 bit being set
+	- If TCR0 is set to Capture 
+		The Load Register store the value of the Timer Coutner at the moment of a capture event. 
+   - The Timer/Counter Register holds a count value and is updated by the timer and counts the value either up or down dependant on configuration. 
+3. To enable the timer set bit 7 (ENT0) to a 1 and bit 5 (LOAD0) must be cleared.
+4. The first is to manually write the bits to the control register, the second is to use a API function call. 
