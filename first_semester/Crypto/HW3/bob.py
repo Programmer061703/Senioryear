@@ -1,3 +1,5 @@
+# bob.py
+
 from Cryptodome.Cipher import AES, PKCS1_OAEP
 from Cryptodome.Util.Padding import unpad
 from Cryptodome.PublicKey import RSA
@@ -23,7 +25,10 @@ def rsa_decrypt(ciphertext, private_key_file):
     return message
 
 def aes_decrypt(data, key):
-
+    if len(data) <= 16:
+        print("Error: The data is too short to contain both IV and ciphertext.")
+        sys.exit(1)
+    
     # Extract IV and ciphertext
     iv = data[:16]
     ciphertext = data[16:]
@@ -36,11 +41,10 @@ def aes_decrypt(data, key):
         padded_message = cipher.decrypt(ciphertext)
         message = unpad(padded_message, AES.block_size)
     except (ValueError, KeyError):
-        print("Error: Decryption failed. Incorrect key or corrupted ciphertext.")
+        print("Error: Decryption failed. Incorrect key, IV, or corrupted ciphertext.")
         sys.exit(1)
     
     return message
-
 
 def main():
     # Read the ciphertext from 'ctext'
@@ -62,10 +66,6 @@ def main():
                 key = f.read()
         except FileNotFoundError:
             print("Error: 'key.txt' not found.")
-            sys.exit(1)
-        
-        if len(key) != 16:
-            print("Error: Key must be 128 bits (16 bytes).")
             sys.exit(1)
         
         # Decrypt the message using AES
