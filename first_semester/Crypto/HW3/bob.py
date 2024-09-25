@@ -23,10 +23,7 @@ def rsa_decrypt(ciphertext, private_key_file):
     return message
 
 def aes_decrypt(data, key):
-    if len(data) <= 16:
-        print("Error: The data is too short to contain both IV and ciphertext.")
-        sys.exit(1)
-    
+
     # Extract IV and ciphertext
     iv = data[:16]
     ciphertext = data[16:]

@@ -5,16 +5,16 @@ from Cryptodome.Random import get_random_bytes
 from Cryptodome.PublicKey import RSA
 import sys
 
-def generate_rsa_keys():
+def generate_rsa_keys(key_size=2048):
     # Generate a 2048-bit RSA key pair
-    key = RSA.generate(2048)
+    key = RSA.generate(key_size)
     
-    # Export Bob's private key and save it to 'bob_private.pem'
+    # Export Bob's private key and save it to 'bob_private.txt'
     private_key = key.export_key()
     with open('bob_private.txt', 'wb') as f:
         f.write(private_key)
     
-    # Export Bob's public key and save it to 'bob_public.pem'
+    # Export Bob's public key and save it to 'bob_public.txt'
     public_key = key.publickey().export_key()
     with open('bob_public.txt', 'wb') as f:
         f.write(public_key)
@@ -52,9 +52,6 @@ def aes_encrypt(message, key):
     return iv + ciphertext
 
 
-def main():
-    encryption_method = input("Enter encryption method (RSA or AES): ").upper()
-    message = input("Enter the message to be encrypted, must be 18 bytes: ").encode()
 
 def main():
     # Ask the user to choose the encryption method
@@ -75,10 +72,15 @@ def main():
         except FileNotFoundError:
             print("Error: 'key.txt' not found. Please generate the key first.")
             sys.exit(1)
-    
-        if len(key) != 16:
-            print("Error: Key must be 128 bits (16 bytes).")
+
+        key_size = int(input("Enter AES key size (128, 192, or 256): "))
+        
+        if key_size not in [128, 192, 256]:
+            print("Error: Invalid AES key size.")
             sys.exit(1)
+        
+        # Convert the key from bits to bytes
+        key = get_random_bytes(key_size // 8)
         
         # Encrypt the message using AES
         ciphertext = aes_encrypt(message, key)
@@ -90,13 +92,17 @@ def main():
         print("Message encrypted using AES and saved to 'ctext'.")
     
     elif encryption_method == 'RSA':
-        # Generate Bob's RSA key pair
-        generate_rsa_keys()
+
+        key_size = int(input("Enter RSA key size (1024, 2048, or 4096): "))
         
-        # Encrypt the message using Bob's public key
-        ciphertext = rsa_encrypt(message, 'bob_public.pem')
+        if key_size not in [1024, 2048, 4096]:
+            print("Error: Invalid RSA key size.")
+            sys.exit(1)
+
+        generate_rsa_keys(key_size)
         
-        # Write the method identifier and ciphertext to 'ctext'
+        ciphertext = rsa_encrypt(message, 'bob_public.txt')
+        
         with open('ctext', 'wb') as f:
             f.write(b'RSA' + ciphertext)
         
