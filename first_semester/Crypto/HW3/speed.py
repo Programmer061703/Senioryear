@@ -55,7 +55,7 @@ def measure_rsa_performance(key_size, message):
 def main():
     message = input("Enter the message to be encrypted, must be 7 bytes: ").encode('utf-8')
     
-    if len(message) != 18:
+    if len(message) != 7:
         print(f"Error: Message must be exactly 7 bytes (you entered {len(message)} bytes).")
         sys.exit(1)    
     print("AES Performance:")
