@@ -38,7 +38,6 @@ def backtracking(board):
     return True  # Whole board filled correctly
 
 # Forward Checking Algorithm
-### YOUR CODE HERE ###
 def initialize_domains(board):
     domains = [[set() for _ in range(9)] for _ in range(9)]
     for row in range(9):
@@ -141,10 +140,9 @@ def forward_checking(board):
         return True
     else:
         return False
-### END YOUR CODE ###
 
-# Arc Consistency (AC-3) Algorithm
-### YOUR CODE HERE ###
+
+
 def build_neighbors():
     neighbors = {}
     for row in range(9):
@@ -231,7 +229,7 @@ def arc_consistency(board):
             return True
         else:
             return False
-### END YOUR CODE ###
+
 
 # Main function to choose the algorithm
 def solve_sudoku(method):
