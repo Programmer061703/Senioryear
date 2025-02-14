@@ -1,0 +1,33 @@
+NameNode
+	- Keeps track of which blocks make up a file and where they are stored 
+	- Stores metadata of the HDFS in a fsimage
+	- Updates the file system, does not change the fsimage file
+	- When started the namenode loads the fsimage file then applies the changes
+FSimage
+	- Acts as the settings for the NameNode
+Secondary NameNode
+	- NOT a backup of the primary node
+	- It reads the log files and applies changes to the fsimage file to bring it up to date
+	- Allows the NameNode to restart faster
+DataNode
+	- Stores the actual data in HDFS
+	- Can run on any underlying filesystem (ext3/4,NTFS,ect) 
+	- Notifies NameNode of what block it has as block reports
+Data Retreval
+	-When a client wants to retreive data
+		- Communicates with the namenode to determine which blocks make up a file
+		  and on which DataNodes those blocks are stored
+		Then Communicate directly with the datanodes to read the data
+
+			
+		Client		Name Node	Secondary
+ 
+		Data Node	Data Node 	Data Node 
+Hadoop MapReduce 
+	- JobTracker determines the execution plan for the job and assigns individual tasks
+		- Splits up data into smaller tasks and sends it to the tasktracker
+		- Keeps the work as close to the data as possible
+	- TaskTracker keeps track of the performance of an individual mapper or reducer
+		- Reports back to the JobTracker node and reports on job progress, sends
+		  data or requests new jobs
+
