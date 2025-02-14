@@ -1,0 +1,17 @@
+DAC - Discretionary Access Control
+	- Individual user sets access control mechanism to allow or deny access to an object
+	- Identity-based access control
+	- Access policy defined by users
+	- Users can pass rights to other subjects and programs
+	- Vulnerable from trojan horses exploting access privileges
+MAC - Mandatory Access Control 
+	- System mechanism controls access to object, and individual cannot alter that access
+	- E.g. The law allows a court to access driving records without the owners permission
+	- Rule based access control
+	- Access policy defined by system
+	- Subjects and their programs can't pass rights
+
+			ACL
+	File F		A: r
+	File G		B: r
+			A: w
